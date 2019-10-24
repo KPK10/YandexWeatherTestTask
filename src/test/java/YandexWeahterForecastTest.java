@@ -14,6 +14,7 @@ public class YandexWeahterForecastTest {
     private final String yandexWeatherKey = "533c30f9-4aba-4832-a9d7-213c2540e6b0";
     private final String latMoscow = "55.75396";
     private final String lonMoscow = "37.620393";
+    private final String yandexWeatherURL = "https://yandex.ru/pogoda/";
 
     public YandexWeahterForecastTest() {
 
@@ -102,9 +103,6 @@ public class YandexWeahterForecastTest {
         } catch (Exception ex) {
             System.out.println(ex.toString());
         }
-
- //       System.out.println(responseForecast.getBody().toString());
- //       System.out.println(responseForecast.getHeaders().toString());
     }
 
     @Test
@@ -145,7 +143,14 @@ public class YandexWeahterForecastTest {
 
     @Test
     public void forecastURLTest() {
-        System.out.println(responseForecast.getBody().toString());
+        String forecastUrlRs = responseForecast.getBody().getObject().getJSONObject("info").getString("url");
+        StringBuilder yandexWeatherMoscowURL = new StringBuilder();
+        yandexWeatherMoscowURL.append(yandexWeatherURL);
+        yandexWeatherMoscowURL.append("?lat=");
+        yandexWeatherMoscowURL.append(latMoscow);
+        yandexWeatherMoscowURL.append("&lon=");
+        yandexWeatherMoscowURL.append(lonMoscow);
+        assertEquals(yandexWeatherMoscowURL.toString(), forecastUrlRs);
     }
 
     @Test
